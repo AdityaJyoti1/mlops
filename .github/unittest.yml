@@ -1,0 +1,23 @@
+name: PYTHON CI (Dockerized)
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  docker-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Build Docker image
+        run: |
+          docker build -t python-ci-image .
+
+      - name: Run tests inside container
+        run: |
+          docker run --rm python-ci-image
